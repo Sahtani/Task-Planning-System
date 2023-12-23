@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>CodePen - Project/Kanban Board - with Tailwind CSS</title>
     <link rel="shortcut icon" href="brand.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         .rotate-45 {
@@ -15,7 +16,30 @@
         .group:hover .group-hover\:flex {
             display: flex;
         }
+        
     </style>
+    <script>
+
+   
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    Saira: ["Saira Condensed", "sans-serif"],
+                },
+                extend:{
+                    colors: {
+                     text: "#0F0F0F ",
+                      background:"#FFFFFF",
+                       primary:"#155831",
+                       secondary:"#D7E4DC",
+                        accent:"#C20002",
+                        primary2:"#3E5815",
+                        hoverd: "#FF4F4D",
+                    },
+                },
+            },
+        };
+    </script>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.1/tailwind.min.css'>
     <link rel="stylesheet" href="./style.css">
 
@@ -32,11 +56,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
             </svg>
-            <input
+            <input 
                 class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
                 type="search" placeholder="Search for anything…">
             <div class="ml-10">
-                <a class="mx-2 text-sm font-semibold text-indigo-700" href="#">Projects</a>
+                <a class="mx-2 text-sm font-semibold text-primary" href="#">Projects</a>
                
             </div>
             <buton class="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
