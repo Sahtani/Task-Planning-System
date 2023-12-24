@@ -15,8 +15,8 @@ define('SESSION_HELPER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'helpers' . DIRECT
 
 
 
-define('BASE_URL', 'http://localhost/DataWare_Version3/');
-define('BASE_URL_ASSETS', 'http://localhost/DataWare_Version3/public/assets/');
+define('BASE_URL', 'http://localhost/Task-Planning-System/public');
+define('BASE_URL_ASSETS', 'http://localhost/Task-Planning-System/public/assets/');
 
 
 

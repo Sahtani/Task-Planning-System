@@ -174,10 +174,6 @@
        
       </div>
 
-     
-
-    
-
       <button
         id="button"
         type="button"
