@@ -100,6 +100,9 @@ class UserController extends Controller
             $user = $this->model->logIn();
             if ($email= $user['email']&& password_verify($password, $user['password'])) {
                 $_SESSION['authorize'] = true;
+
+               
+               
                 redirect("user/home");
             } else {
                 $this->log_in("This account does not exist or the password is incorrect.");

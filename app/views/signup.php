@@ -59,13 +59,13 @@
                     <input class="border-2 border-dark   w-full px-2 py-2" type="password" id="password" name="password" required placeholder="Password">
                 </div>
                 <p class="text-black     text-center mb-1">
-                    Alreadt Have an account? <a href="../index.php" class="font-bold">LogIn</a></p>
+                    Alreadt Have an account? <a href="<?= BASE_URL ?>/user/log_in" class="font-bold">LogIn</a></p>
                 <div class="mx-4">
                     <button class="px-4 py-3 text-white w-full  bg-dark mb-5" name="submit" type="submit">Sign Up</button>
                 </div>
             </form>
             <p class="text-red-500 text-center mb-2">
-                <?= $this->view_data["error"];?>
+                <?= $this->view_data["error"]; ?>
             </p>
 
         </div>
