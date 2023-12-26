@@ -100,7 +100,7 @@ class UserController extends Controller
             $user = $this->model->logIn();
             if ($email= $user['email']&& password_verify($password, $user['password'])) {
                 $_SESSION['authorize'] = true;
-
+                $_SESSION["user-id"] = $user["iduser"];
                
                 redirect("project");
             } else {
@@ -111,4 +111,12 @@ class UserController extends Controller
             header("Location: http://localhost/DataWare_Version3//public/home/");
         }
     }
+    public function logout()
+    {
+
+        if (session_destroy()) {
+            redirect('user/log_in');
+        }
+    }
+
 }

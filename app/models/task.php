@@ -17,15 +17,25 @@ class Task extends Db{
     }
 
     public function setIdta($idTask){
-        $this->idTask = $$idTask;
+        $this->idTask =$idTask;
 
     }
+    public function getTitle()
+    {
+        return $this->titleTask;
+    }
+
+    public function setTitle($titleTask)
+    {
+        $this->titleTask = $titleTask;
+    }
+
     public function getDescta(){
         return $this->descTask;
     }
 
     public function setDescta($descTask){
-        $this->descTask = $$descTask;
+        $this->descTask =$descTask;
     }
     public function getDeadline(){
         return $this->deadline;
@@ -43,15 +53,15 @@ class Task extends Db{
     }
 
 
-    public function addtask($user_id,$prject_id){
+    public function addTask($user_id,$project_id){
         $user_id = $_SESSION["user-id"];
         $stmt=$this->conn->prepare("INSERT INTO task (title,description,status,deadline,user_id,id_project) values(:title,:description,:status,:deadline,:user_id,:id_project)");
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':deadline', $deadline);
+        $stmt->bindParam(':title', $this->titleTask);
+        $stmt->bindParam(':description', $this->descTask);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':deadline', $this->deadline);
         $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':id_project', $prject_id);
+        $stmt->bindParam(':id_project', $project_id);
         if($stmt->execute()){
             return true;
         }

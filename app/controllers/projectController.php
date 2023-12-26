@@ -5,7 +5,6 @@ class ProjectController extends Controller
     public function index($error = "")
     {
         if (isUserLogged()) {
-          
             $this->view("project/project", "", ["error" => $error,"project" => $this->displayproject()]);
             $this->view->render();
         } else {
@@ -13,6 +12,7 @@ class ProjectController extends Controller
         }}
     public function addproject($error = "")
     {
+        
         $this->view("project/addproject", "", ["error" => $error]);
         $this->view->render();
     }
@@ -51,6 +51,7 @@ class ProjectController extends Controller
     {
         $this->model("project");
         $project = $this->model->getprojects();
+     
         return $project;
     }
     // updateproject:
@@ -130,23 +131,7 @@ class ProjectController extends Controller
 
 
 
-    public function logout()
-    {
-
-        if (session_destroy()) {
-            redirect('user/log_in');
-        }
-    }
-
-
-
-
-
-
-
-
-
-
+   
     public function validateData($data)
     {
         if (isset($data) and !empty($data)) {

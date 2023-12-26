@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CodePen - Project/Kanban Board - with Tailwind CSS</title>
-    <link rel="shortcut icon" href="brand.png" type="image/x-icon">
+    <link rel="shortcut icon" href="" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
 
 
