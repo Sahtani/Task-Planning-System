@@ -102,8 +102,7 @@ class UserController extends Controller
                 $_SESSION['authorize'] = true;
 
                
-               
-                redirect("user/home");
+                redirect("project");
             } else {
                 $this->log_in("This account does not exist or the password is incorrect.");
                 exit;

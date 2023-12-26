@@ -14,6 +14,15 @@ class TaskController extends Controller
             redirect(("user/log_in"));
         }
     }
+    public function addtask($error=""){
+        $this->view("task/addtask",["error"=>$error]);
+        $this->view->render();
+    }
+    public function add_Task(){
+        if (isset($_POST["submit"])) {
+
+     }
+    }
     public function displayTasks()
     {
         $this->model("task");
