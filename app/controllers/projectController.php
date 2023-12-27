@@ -69,9 +69,13 @@ class ProjectController extends Controller
     }
     public function updateproject($id, $error = "")
     {
+        if (isUserLogged()) {
         $project = $this->displayprojectRow($id);
         $this->view("project/updateproject", "", ["error" => $error, "project" => $project]);
         $this->view->render();
+        } else {
+            redirect('user/log_in');
+        }
     }
     public function update_project()
     {

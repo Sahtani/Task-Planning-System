@@ -105,4 +105,57 @@ class Task extends Db
             return $e->getMessage();
         }
     }
+    public function countTask($user_id, $project_id, $status)
+    {
+        try {
+            $user_id = $_SESSION["user-id"];
+            $project_id = $_SESSION["idproject"];
+            $stmt = $this->connect()->prepare("SELECT count(id_task) from task where user_id=:user_id and id_project=:id_project and status=:status and archive is null");
+            $stmt->bindParam(":user_id", $user_id);
+            $stmt->bindParam(":id_project", $project_id);
+            $stmt->bindParam("status", $status);
+            if ($stmt->execute()) {
+                return $stmt->fetchColumn();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function gettaskRow($id)
+    {
+        try {
+            $id = $this->getIdta();
+            $stmt = $this->connect()->prepare("SELECT * FROM task WHERE id_task =$id");
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function updateTask($id)
+    {
+        try {
+            $id = $this->getIdta();
+            $user_id = $_SESSION["user-id"];
+            $project_id = $_SESSION["idproject"];
+            $stmt = $this->connect()->prepare("UPDATE task SET title=:title, description=:desc, status=:status, deadline=:deadline, user_id=:user_id, id_project=:id_project WHERE id_task=:id");
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(':title', $this->titleTask);
+            $stmt->bindParam(':desc', $this->descTask);
+            $stmt->bindParam(':status', $this->status);
+            $stmt->bindParam(':deadline', $this->deadline);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':id_project', $project_id);
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+
 }

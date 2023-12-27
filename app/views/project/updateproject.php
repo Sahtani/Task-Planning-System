@@ -1,11 +1,6 @@
 <?php
 $project = $this->view_data["project"];
-
-
 ?>
-
-
-
 <!doctype html>
 <html lang="en">
 
