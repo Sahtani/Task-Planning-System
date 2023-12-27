@@ -5,7 +5,12 @@ class ProjectController extends Controller
     public function index($error = "")
     {
         if (isUserLogged()) {
-            $this->view("project/project", "", ["error" => $error,"project" => $this->displayproject()]);
+            if (isset($_SESSION["user-id"])) {
+                $user_id = $_SESSION["user-id"];
+            } else {
+                echo "User ID not found in the session.";
+            }
+            $this->view("project/project", "", ["error" => $error,"project" => $this->displayproject($user_id)]);
             $this->view->render();
         } else {
             redirect('user/log_in');
@@ -47,10 +52,10 @@ class ProjectController extends Controller
         }
     }
     // display project:
-    public function displayproject()
+    public function displayproject($user_id)
     {
         $this->model("project");
-        $project = $this->model->getprojects();
+        $project = $this->model->getprojects($user_id);
      
         return $project;
     }

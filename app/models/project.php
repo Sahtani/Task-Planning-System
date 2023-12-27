@@ -63,10 +63,12 @@ class Project extends Db
         }
     }
     // getprojects:
-    public function getprojects()
+    public function getprojects($user_id)
     {
         try {
-            $stmt = $this->connect()->prepare("SELECT * FROM project");
+            $user_id = $_SESSION["user-id"];
+            $stmt = $this->connect()->prepare("SELECT * FROM project where user_id=:user_id");
+            $stmt->bindParam(":user_id",$user_id);
             $stmt->execute();
             $data = $stmt->fetchAll();
             if (count($data) > 0) {

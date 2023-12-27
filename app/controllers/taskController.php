@@ -4,11 +4,22 @@ class TaskController extends Controller
     public function task($project_id, $error = "")
     {
         if (isUserLogged()) {
+            if (isset($_SESSION["idproject"])) {
+
             $_SESSION["idproject"]=intval($project_id);
-            $this->view("task/home", "", ["error" => $error]);
-            $this->view->render();
-            // $this->view("task/home", ["error" => $error, "task" => $this->displayTasks()]);
+            
+            }else {
+                echo "Project ID not found in the session.";
+            }
+            if (isset($_SESSION["user-id"])) {
+                $user_id = $_SESSION["user-id"];
+            } else {
+                echo "User ID not found in the session.";
+            }
+            // $this->view("task/home", "", ["error" => $error]);
             // $this->view->render();
+            $this->view("task/home", "",["error" => $error, "task" => $this->displayTasks($user_id, $project_id)]);
+            $this->view->render();
         } else {
             redirect("user/log_in");
         }
@@ -49,12 +60,20 @@ class TaskController extends Controller
             };
         }
     }
-    public function displayTasks()
+    public function displayTasks($user_id, $project_id)
     {
         $this->model("task");
-        $tasks = $this->model->getTasks();
+        $tasks = $this->model->getTasks($user_id, $project_id);
         if ($tasks) {
-        }
+            return $tasks;
+        }else return false;
+    }
+    public function delete_task($idTask)
+    {
+        $this->model("task");
+        $this->model->setIdta($idTask);
+        $result = $this->model->Archive($idTask);
+        redirect("task/task");
     }
     public function validateData($data)
     {
