@@ -6,8 +6,9 @@ class TaskController extends Controller
     {     
         if (isUserLogged()) {
             $status = "";
+
             if (isset($_SESSION["idproject"])) {
-                $_SESSION["idproject"] = intval($project_id);
+                $_SESSION["idproject"] =intval($project_id);
             } else {
                 echo "Project ID not found in the session.";
             }
@@ -51,7 +52,7 @@ class TaskController extends Controller
             $this->model->setdeadline($deadline);
             $task = $this->model->addTask($user_id, $idproject);
             if ($task) {
-                $this->task($idproject, "task/home");
+                redirect("task/task/" . $idproject);
 
                 exit();
             } else {
@@ -145,7 +146,8 @@ class TaskController extends Controller
         $this->model->setdeadline($deadline);
         $task = $this->model->updateTask($idTask);
         if ($task) {
-            $this->task($idproject, "task/home");
+            redirect("task/task/" . $idproject);
+
             exit();
         } else {
             $this->task($idproject, "task not updated Successfully!");

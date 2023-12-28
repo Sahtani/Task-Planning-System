@@ -101,6 +101,8 @@ class UserController extends Controller
             if ($email= $user['email']&& password_verify($password, $user['password'])) {
                 $_SESSION['authorize'] = true;
                 $_SESSION["user-id"] = $user["iduser"];
+                $_SESSION["name-id"] = $user["firstname"];
+
                
                 redirect("project");
             } else {

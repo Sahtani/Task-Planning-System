@@ -156,6 +156,17 @@ class Task extends Db
             return $e->getMessage();
         }
     }
+   public function statistictask($status){
+        try {
+            $stmt = $this->connect()->prepare("SELECT count(id_task) from task where status=:status");
+            $stmt->bindParam("status", $status);
+            if ($stmt->execute()) {
+                return $stmt->fetchColumn();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+   }
 
 
 }
