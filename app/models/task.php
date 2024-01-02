@@ -1,5 +1,5 @@
 <?php
-class Task extends Db
+class Task
 {
     private $idTask;
     private $titleTask;
@@ -80,7 +80,7 @@ class Task extends Db
         try {
             // $user_id = $_SESSION["user-id"];
             // $project_id = $_SESSION["idproject"];
-            $stmt = $this->connect()->prepare("SELECT * FROM task where user_id=:user_id and id_project=:id_project and archive is null ORDER BY deadline DESC");
+            $stmt = $this->conn->prepare("SELECT * FROM task where user_id=:user_id and id_project=:id_project and archive is null ORDER BY deadline DESC");
             $stmt->bindParam(":user_id", $user_id);
             $stmt->bindParam(":id_project", $project_id);
             $stmt->execute();
@@ -95,7 +95,7 @@ class Task extends Db
     public function Archive($idTask)
     {
         try {
-            $stmt = $this->connect()->prepare("UPDATE task set archive=1 where id_task=:id_task");
+            $stmt = $this->conn->prepare("UPDATE task set archive=1 where id_task=:id_task");
             $stmt->bindParam(":id_task", $idTask);
             if ($stmt->execute()) {
                 return
@@ -110,7 +110,7 @@ class Task extends Db
         try {
             // $user_id = $_SESSION["user-id"];
             // $project_id = $_SESSION["idproject"];
-            $stmt = $this->connect()->prepare("SELECT count(id_task) from task where user_id=:user_id and id_project=:id_project and status=:status and archive is null");
+            $stmt = $this->conn->prepare("SELECT count(id_task) from task where user_id=:user_id and id_project=:id_project and status=:status and archive is null");
             $stmt->bindParam(":user_id", $user_id);
             $stmt->bindParam(":id_project", $project_id);
             $stmt->bindParam("status", $status);
@@ -125,7 +125,7 @@ class Task extends Db
     {
         try {
             $id = $this->getIdta();
-            $stmt = $this->connect()->prepare("SELECT * FROM task WHERE id_task =$id");
+            $stmt = $this->conn->prepare("SELECT * FROM task WHERE id_task =$id");
             if ($stmt->execute()) {
                 return $stmt->fetch();
             }
@@ -139,7 +139,7 @@ class Task extends Db
             $id = $this->getIdta();
             $user_id = $_SESSION["user-id"];
             $project_id = $_SESSION["idproject"];
-            $stmt = $this->connect()->prepare("UPDATE task SET title=:title, description=:desc, status=:status, deadline=:deadline, user_id=:user_id, id_project=:id_project WHERE id_task=:id");
+            $stmt = $this->conn->prepare("UPDATE task SET title=:title, description=:desc, status=:status, deadline=:deadline, user_id=:user_id, id_project=:id_project WHERE id_task=:id");
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(':title', $this->titleTask);
             $stmt->bindParam(':desc', $this->descTask);
@@ -156,9 +156,10 @@ class Task extends Db
             return $e->getMessage();
         }
     }
-   public function statistictask($status){
+    public function statistictask($status)
+    {
         try {
-            $stmt = $this->connect()->prepare("SELECT count(id_task) from task where status=:status");
+            $stmt = $this->conn->prepare("SELECT count(id_task) from task where status=:status");
             $stmt->bindParam("status", $status);
             if ($stmt->execute()) {
                 return $stmt->fetchColumn();
@@ -170,10 +171,10 @@ class Task extends Db
     public function searchTask()
     {
         try {
-            $this->titleTask = "%{$this->titleTask}%"; 
-            $this->descTask = "%{$this->descTask}%"; 
+            $this->titleTask = "%{$this->titleTask}%";
+            $this->descTask = "%{$this->descTask}%";
 
-            $stmt = $this->conn->prepare("SELECT * FROM task WHERE title LIKE :title OR description LIKE :desc");
+            $stmt = $this->conn->prepare("SELECT * FROM task WHERE title LIKE :title OR description LIKE :desc AND archive is null");
             $stmt->bindParam(':title', $this->titleTask);
             $stmt->bindParam(':desc', $this->descTask);
             $stmt->execute();
@@ -186,6 +187,26 @@ class Task extends Db
             return $e->getMessage();
         }
     }
-
-
+    public function taskProject()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT project.name, COUNT(id_task) AS numberoftask FROM task JOIN project ON task.id_project = project.idproject GROUP BY id_project ORDER BY numberoftask DESC LIMIT 1;");
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function taskDone()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT project.name, COUNT(id_task) AS numberoftaskdone FROM task JOIN project ON task.id_project = project.idproject where status='done' GROUP BY id_project ORDER BY numberoftaskdone DESC LIMIT 1");
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }

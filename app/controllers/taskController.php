@@ -5,15 +5,8 @@ class TaskController extends Controller
 
     {
         if (isUserLogged()) {
-            // var_dump(isUserLogged());
-            // die();
             $status = "";
-
-            // if (isset($_SESSION["idproject"])) {
             $_SESSION["idproject"] = intval($project_id);
-            // } else {
-            //     echo "Project ID not found in the session.";
-            // }
             if (isset($_SESSION["user-id"])) {
                 $user_id = $_SESSION["user-id"];
             } else {
@@ -93,13 +86,13 @@ class TaskController extends Controller
         $this->model("task");
         $taskTodo = $this->model->countTask($user_id, $project_id, "to do");
         $taskInprogress = $this->model->countTask($user_id, $project_id, "in progress");
-        $taskDoing = $this->model->countTask($user_id, $project_id, "doing");
+        $taskDone = $this->model->countTask($user_id, $project_id, "done");
 
         return
             [
                 "to do" => $taskTodo,
                 "in progress" => $taskInprogress,
-                "doing" => $taskDoing,
+                "done" => $taskDone,
             ];
     }
     public function displaytaskRow($idtask)
@@ -171,7 +164,6 @@ class TaskController extends Controller
                 $this->model->setDescta($searchValue);
                 $tasks = $this->model->searchTask();
                 if ($tasks) {
-                    // return $tasks;
                     redirect("task/task/" . $project_id);
                 } else {
                     $this->task($project_id, "No tasks found matching the search criteria!");
@@ -189,7 +181,7 @@ class TaskController extends Controller
             }
         }
     }
-
+   
     public function validateData($data)
     {
         if (isset($data) and !empty($data)) {

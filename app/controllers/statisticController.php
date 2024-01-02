@@ -6,24 +6,24 @@ class StatisticController extends Controller
 {
 
     public function index($error = "")
-   
-    { 
+
+    {
         if (isUserLogged()) {
             $status = "";
-            // if (isset($_SESSION["user-id"])) {
-            // $user_id = $_SESSION["user-id"];
-            // } else {
-            // echo "User ID not found in the session.";
-            // }
-            $this->view("stastic", "", ["error" => $error, "statistic" => $this->statisticTask($status)]);
+            $this->view("stastic", "", [
+                "error" => $error,
+                "statistic" => $this->statisticTask($status),
+                "numberOfTask" => $this->numberOfTask(),
+                "taskDone" => $this->task_Done()
+            ]);
+
             $this->view->render();
         } else {
             redirect('user/log_in');
         }
     }
 
-    public function
-    statisticTask($status)
+    public function  statisticTask($status)
     {
         $this->model("task");
         $taskTodo = $this->model->statistictask("to do");
@@ -39,4 +39,24 @@ class StatisticController extends Controller
 
             ];
     }
+    public function numberOfTask()
+    {
+        $this->model("task");
+        $taskInfo = $this->model->taskProject();
+       if($taskInfo>0){
+        return $taskInfo;
+       }
+    }
+    public function task_Done()
+    {
+        $this->model("task");
+        $taskdone = $this->model->taskDone();
+        if ($taskdone > 0) {
+            return $taskdone;
+        }
+    }
+
+
+
+
 }
