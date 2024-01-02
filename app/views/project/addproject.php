@@ -76,7 +76,7 @@
         };
     </script>
 
-    <div class="min-h-screen bg-gray-100 p-0 sm:p-12 mx-auto">
+    <div class="min-h-screen  md:w-1/2 mx-10 mt-5 bg-gray-100 p-0 sm:p-12 md:mx-auto">
         <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
             <h1 class="text-2xl font-bold mb-8 flex flex-col items-center">Add Project </h1>
             <form id="form" method="post" action="<?= BASE_URL ?>/project/Add_project" novalidate>
@@ -101,9 +101,12 @@
                     </div>
 
                 </div>
-                <button id="button" type="submit" name="submit" class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-indigo-500 hover:bg-indigo-600 hover:shadow-lg focus:outline-none font-semibold">
-                    Add Project
-                </button>
+                <div class="flex justify-between gap-4 mt-6">
+                    <button id="button" type="submit" name="submit" class="w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-indigo-500 hover:bg-indigo-600 hover:shadow-lg focus:outline-none font-semibold">
+                        Add Project
+                    </button>
+                    <a href="<?= BASE_URL ?>/project" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm md:px-5 py-1 md:py-2.5 text-center">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

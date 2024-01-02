@@ -1,4 +1,5 @@
- <?php   function isUserLogged() {
+ <?php   
+ function isUserLogged() {
     if(isset($_SESSION["authorize"]) && $_SESSION["authorize"]) {
     return true;
     }else {

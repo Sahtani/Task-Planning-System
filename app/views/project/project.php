@@ -125,8 +125,8 @@
                 <div class="flex items-center justify-center h-14 rounded bg-btn ">
                     <a href="<?= BASE_URL ?>/project/addproject">
                         <div class="flex flex-row items-center justify-center gap-2">
-                            <button class="text-2xl text-white focus:outline-none">
-                                New Project ...
+                            <button class=" text-sm md:text-2xl text-white focus:outline-none">
+                                New Project 
                             </button>
                         </div>
                     </a>

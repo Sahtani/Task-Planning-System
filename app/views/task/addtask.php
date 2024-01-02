@@ -78,10 +78,10 @@
     };
   </script>
 
-  <div class="min-h-screen bg-gray-100 p-0 sm:p-12 w-1/2
+  <div class="min-h-screen bg-gray-100 p-0 sm:p-12 md:w-1/2 w-full mx-10 mt-5
 ">
-    <div class="mx-auto max-w-md px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
-      <h1 class="text-2xl font-bold mb-8 flex flex-col items-center">Add Task </h1>
+    <div class="mx-auto max-w-md px-6  p-10 md:py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
+      <h1 class="text-2xl font-bold md:mb-8 flex flex-col items-center">Add Task </h1>
       <form action="<?= BASE_URL ?>/task/add_Task" class=space-y-6" method="post">
       
         <div>
@@ -109,7 +109,7 @@
         </div>
         <div class="flex justify-between gap-4 mt-6">
           <button name="submit" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
-          <a href="<?= BASE_URL ?>/task" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</a>
+          <a href="<?= BASE_URL ?>/task" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm md:px-5 px-2 md:py-2.5  p-1 text-center">Cancel</a>
         </div>
       </form>
     </div>

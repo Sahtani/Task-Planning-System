@@ -49,9 +49,9 @@
 
 
                     <div class="my-12 border-b text-center">
-                        <div class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                            Log in up with e-mail
-                        </div>
+                        <a href="<?= BASE_URL ?>/user/" class="border-b  leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+                            Don't have an account
+                        </a>
                     </div>
                     <form action="<?= BASE_URL ?>/user/Userlogin" method="post">
                         <div class="mx-auto max-w-xs">

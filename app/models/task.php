@@ -63,7 +63,7 @@ class Task extends Db
 
     public function addTask($user_id, $project_id)
     {
-        $user_id = $_SESSION["user-id"];
+        // $user_id = $_SESSION["user-id"];
         $stmt = $this->conn->prepare("INSERT INTO task (title,description,status,deadline,user_id,id_project) values(:title,:description,:status,:deadline,:user_id,:id_project)");
         $stmt->bindParam(':title', $this->titleTask);
         $stmt->bindParam(':description', $this->descTask);
@@ -78,8 +78,8 @@ class Task extends Db
     public function getTasks($user_id, $project_id)
     {
         try {
-            $user_id = $_SESSION["user-id"];
-            $project_id = $_SESSION["idproject"];
+            // $user_id = $_SESSION["user-id"];
+            // $project_id = $_SESSION["idproject"];
             $stmt = $this->connect()->prepare("SELECT * FROM task where user_id=:user_id and id_project=:id_project and archive is null ORDER BY deadline DESC");
             $stmt->bindParam(":user_id", $user_id);
             $stmt->bindParam(":id_project", $project_id);
@@ -108,8 +108,8 @@ class Task extends Db
     public function countTask($user_id, $project_id, $status)
     {
         try {
-            $user_id = $_SESSION["user-id"];
-            $project_id = $_SESSION["idproject"];
+            // $user_id = $_SESSION["user-id"];
+            // $project_id = $_SESSION["idproject"];
             $stmt = $this->connect()->prepare("SELECT count(id_task) from task where user_id=:user_id and id_project=:id_project and status=:status and archive is null");
             $stmt->bindParam(":user_id", $user_id);
             $stmt->bindParam(":id_project", $project_id);
@@ -166,7 +166,26 @@ class Task extends Db
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-   }
+    }
+    public function searchTask()
+    {
+        try {
+            $this->titleTask = "%{$this->titleTask}%"; 
+            $this->descTask = "%{$this->descTask}%"; 
+
+            $stmt = $this->conn->prepare("SELECT * FROM task WHERE title LIKE :title OR description LIKE :desc");
+            $stmt->bindParam(':title', $this->titleTask);
+            $stmt->bindParam(':desc', $this->descTask);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $result = $stmt->fetchAll();
+                return $result;
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
 
 }

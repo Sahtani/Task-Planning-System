@@ -2,16 +2,18 @@
 class TaskController extends Controller
 {
     public function task($project_id, $error = "")
-     
-    {     
+
+    {
         if (isUserLogged()) {
+            // var_dump(isUserLogged());
+            // die();
             $status = "";
 
-            if (isset($_SESSION["idproject"])) {
-                $_SESSION["idproject"] =intval($project_id);
-            } else {
-                echo "Project ID not found in the session.";
-            }
+            // if (isset($_SESSION["idproject"])) {
+            $_SESSION["idproject"] = intval($project_id);
+            // } else {
+            //     echo "Project ID not found in the session.";
+            // }
             if (isset($_SESSION["user-id"])) {
                 $user_id = $_SESSION["user-id"];
             } else {
@@ -23,6 +25,7 @@ class TaskController extends Controller
             redirect("user/log_in");
         }
     }
+    
     public function addtask($error = "")
     {
         $this->view("task/addtask", ["error" => $error]);
@@ -97,8 +100,6 @@ class TaskController extends Controller
                 "to do" => $taskTodo,
                 "in progress" => $taskInprogress,
                 "doing" => $taskDoing,
-
-
             ];
     }
     public function displaytaskRow($idtask)
@@ -113,8 +114,7 @@ class TaskController extends Controller
     public function updateTask($idtask, $error = "")
     {
         if (isUserLogged()) {
-           $id=intval($idtask);
-           
+            $id = intval($idtask);
             $task = $this->displaytaskRow($id);
             $this->view("task/uptask", "", ["error" => $error, "task" => $task]);
             $this->view->render();
@@ -122,8 +122,9 @@ class TaskController extends Controller
             redirect('user/log_in');
         }
     }
-    public function update_Task(){
-        $idTask=$_POST['id'];
+    public function update_Task()
+    {
+        $idTask = $_POST['id'];
         $title = $_POST['task-title'];
         $des = $_POST['task-description'];
         $status = $_POST['status'];
@@ -153,7 +154,42 @@ class TaskController extends Controller
             $this->task($idproject, "task not updated Successfully!");
         }
     }
-    
+
+    public function search()
+    {
+        if (isset($_POST["search_submit"])) {
+            if (isset($_SESSION["user-id"])) {
+                $user_id = $_SESSION["user-id"];
+            } else {
+                echo "User ID not found in the session.";
+            }
+            $project_id = $_SESSION["idproject"];
+            $searchValue = $_POST["task_search"];
+            $this->model("task");
+            if (!empty($searchValue)) {
+                $this->model->setTitle($searchValue);
+                $this->model->setDescta($searchValue);
+                $tasks = $this->model->searchTask();
+                if ($tasks) {
+                    // return $tasks;
+                    redirect("task/task/" . $project_id);
+                } else {
+                    $this->task($project_id, "No tasks found matching the search criteria!");
+                }
+            } else {
+                $this->model("task");
+                $tasks = $this->model->getTasks($user_id, $project_id);
+
+                if ($tasks) {
+                    $this->view("task/home", "", ["task" => $tasks]);
+                    $this->view->render();
+                } else {
+                    $this->task($project_id, "No tasks found!");
+                }
+            }
+        }
+    }
+
     public function validateData($data)
     {
         if (isset($data) and !empty($data)) {

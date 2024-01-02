@@ -52,7 +52,8 @@ class UserController extends Controller
             if ($existed_Persone) {
                 $this->index("This Email Already Exist!");
                 exit;
-            } else redirect("user/log_in");
+            } else {
+                redirect("user/log_in");}
 
             // Sign up the user
             $this->model->Signup();
@@ -98,7 +99,7 @@ class UserController extends Controller
 
 
             $user = $this->model->logIn();
-            if ($email= $user['email']&& password_verify($password, $user['password'])) {
+            if ($user !== false && $email= $user['email']&& password_verify($password, $user['password'])) {
                 $_SESSION['authorize'] = true;
                 $_SESSION["user-id"] = $user["iduser"];
                 $_SESSION["name-id"] = $user["firstname"];

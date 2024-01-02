@@ -1,12 +1,13 @@
 <?php $tasks = $this->view_data['task'];
 $numberOftask = $this->view_data['numberOftask'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - Project/Kanban Board - with Tailwind CSS</title>
+    <title></title>
     <link rel="shortcut icon" href="" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,11 +20,8 @@ $numberOftask = $this->view_data['numberOftask'];
                 },
                 extend: {
                     colors: {
-                        text: " #edf2f7",
-                        primary3: "#155831",
-                        secondary: "#D7E4DC",
+
                         accent: "#C20002",
-                        primary2: "#3E5815",
                         hoverd: "#FF4F4D",
                         dark: "#1e1b4b",
                         secondary: "#312e81",
@@ -124,22 +122,21 @@ $numberOftask = $this->view_data['numberOftask'];
     <div class="p-4 sm:ml-64">
         <div class="p-4 rounded-lg mt-14">
             <div class="grid md:grid-cols-2 grid-cols-1  gap-4 mb-4">
-                <div class="">
-                    <div class="w-full">
-                        <div class='max-w-md ml-6 shadow-xl w-full'>
-                            <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
-                                <div class="grid place-items-center h-full w-12 text-gray-300 border-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                </div>
+                <form method=post action="<?= BASE_URL ?>/task/search" class="w-full">
+                    <div class='max-w-md ml-6 shadow-xl w-full'>
+                        <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
 
-                                <input class="border border-0 border-white focus:outline-none focus:ring focus:ring-white h-full w-full outline-none text-sm text-gray-700 pr-2" type="text" id="search" placeholder="Search something.." />
-                            </div>
+
+                            <input class="border border-0 border-white focus:outline-none focus:ring focus:ring-white h-full w-full outline-none text-sm text-gray-700 pr-2" name="task_search" type="text" id="search" placeholder="Search task.." />
+                            <button id="button" type="submit" name="search_submit" class="grid place-items-center h-full w-12 text-gray-300 border border-0 border-white focus:outline-none focus:ring focus:ring-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="flex items-center justify-end ">
+                </form>
+                <!-- <div class="flex items-center justify-end ">
                     <div class="flex items-center justify-center  h-14 w-1/2  rounded bg-blutextbtn">
                         <div class="flex flex-row items-center justify-center gap-2">
                             <p class="text-2xl text-white ">
@@ -152,7 +149,7 @@ $numberOftask = $this->view_data['numberOftask'];
 
 
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 px-4 pb-8 items-start overflow-x-scroll ">
                 <div class="  rounded bg-grey-light  flex-no-shrink w-70 p-2 mr-3">
@@ -271,7 +268,7 @@ $numberOftask = $this->view_data['numberOftask'];
                 <div class="rounded bg-grey-light flex-no-shrink w-70 p-2 ">
                     <div class="flex items-center flex-shrink-0 h-10 px-2">
                         <span class="block text-sm font-semibold">Done</span>
-                        <span class="flex items-center justify-center w-5 h-5 ml-2 text-sm font-semibold text-indigo-500 bg-white rounded bg-opacity-30"><?=$numberOftask["doing"] ?></span>
+                        <span class="flex items-center justify-center w-5 h-5 ml-2 text-sm font-semibold text-indigo-500 bg-white rounded bg-opacity-30"><?= $numberOftask["doing"] ?></span>
                         <button class="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -280,10 +277,7 @@ $numberOftask = $this->view_data['numberOftask'];
                     </div>
                     <?php if ($tasks > 0) {
                         foreach ($tasks as $task) {
-                            if ($task['status'] === "doing") {
-
-
-
+                            if ($task['status'] === "done") {
                     ?>
                                 <div class="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 shadow-xl hover:shadow-2xl" draggable="true">
                                     <button class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
