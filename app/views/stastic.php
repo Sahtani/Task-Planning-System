@@ -2,6 +2,9 @@
 $numberOftask = $this->view_data['statistic'];
 $task = $this->view_data['numberOfTask'];
 $taskDone = $this->view_data['taskDone'];
+$taskDoneth = $this->view_data['taskth'];
+$taskin = $this->view_data['taskinc'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,8 +164,8 @@ $taskDone = $this->view_data['taskDone'];
                     </svg>
                 </div>
                 <div>
-                    <span class="block text-2xl font-bold"><?= $task['name'] ?></span>
-                    <span class="block text-gray-500"><?= $task['numberoftask'] ?></span>
+                    <span class="block text-2xl font-bold"><?= $task['numberoftask'] ?></span>
+                    <span class="block text-gray-500"><?= $task['name'] ?></span>
                     <span class="block text-gray-500">The project with the most tasks</span>
 
                 </div>
@@ -174,8 +177,8 @@ $taskDone = $this->view_data['taskDone'];
                     </svg>
                 </div>
                 <div>
-                    <span class="block text-2xl font-bold"><?= $taskDone["name"] ?></span>
-                    <span class="block text-gray-500"><?= $taskDone["numberoftaskdone"] ?></span>
+                    <span class="block text-2xl font-bold"><?= $taskDone["numberoftaskdone"] ?></span>
+                    <span class="block text-gray-500"><?= $taskDone["name"] ?></span>
                     <span class="block text-gray-500">The project with the most tasks Done</span>
                 </div>
             </div>
@@ -186,9 +189,10 @@ $taskDone = $this->view_data['taskDone'];
                     </svg>
                 </div>
                 <div>
-                    <span class="inline-block text-2xl font-bold">9</span>
-                    <span class="inline-block text-xl text-gray-500 font-semibold">(14%)</span>
-                    <span class="block text-gray-500">Underperforming students</span>
+                    <span class="inline-block text-2xl font-bold"><?= $taskDoneth["numberoftaskdone"] ?></span>
+                    <span class="block text-xl text-gray-500 font-semibold"><?= $taskDoneth["name"] ?>
+                    </span>
+                    <span class="block text-gray-500">The project with the least amount of tasks</span>
                 </div>
             </div>
             <div class="flex items-center p-8 bg-white shadow rounded-lg">
@@ -198,8 +202,8 @@ $taskDone = $this->view_data['taskDone'];
                     </svg>
                 </div>
                 <div>
-                    <span class="block text-2xl font-bold">83%</span>
-                    <span class="block text-gray-500">Finished homeworks</span>
+                    <span class="block text-2xl font-bold"><?= $taskin["numberoftaskdone"] ?></span>
+                    <span class="block text-gray-500"><?= $taskin["name"] ?></span>
                 </div>
             </div>
         </section>

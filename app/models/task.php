@@ -105,22 +105,6 @@ class Task
             return $e->getMessage();
         }
     }
-    public function countTask($user_id, $project_id, $status)
-    {
-        try {
-            // $user_id = $_SESSION["user-id"];
-            // $project_id = $_SESSION["idproject"];
-            $stmt = $this->conn->prepare("SELECT count(id_task) from task where user_id=:user_id and id_project=:id_project and status=:status and archive is null");
-            $stmt->bindParam(":user_id", $user_id);
-            $stmt->bindParam(":id_project", $project_id);
-            $stmt->bindParam("status", $status);
-            if ($stmt->execute()) {
-                return $stmt->fetchColumn();
-            }
-        } catch (PDOException $e) {
-            return $e->getMessage();
-        }
-    }
     public function gettaskRow($id)
     {
         try {
@@ -202,6 +186,35 @@ class Task
     {
         try {
             $stmt = $this->conn->prepare("SELECT project.name, COUNT(id_task) AS numberoftaskdone FROM task JOIN project ON task.id_project = project.idproject where status='done' GROUP BY id_project ORDER BY numberoftaskdone DESC LIMIT 1");
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function taskProjectth()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT project.name, COUNT(id_task) AS numberoftaskdone FROM task JOIN project ON task.id_project = project.idproject where status='done' GROUP BY id_project ORDER BY numberoftaskdone ASC LIMIT 1");
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function task()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT project.name, COUNT(id_task) AS numberoftaskdone
+            FROM task
+            JOIN project ON task.id_project = project.idproject
+            WHERE status IN ('to do', 'in progress')
+            GROUP BY id_project
+            ORDER BY numberoftaskdone DESC
+            LIMIT 1;
+            ");
             if ($stmt->execute()) {
                 return $stmt->fetch();
             }

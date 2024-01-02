@@ -12,7 +12,7 @@ class TaskController extends Controller
             } else {
                 echo "User ID not found in the session.";
             }
-            $this->view("task/home", "", ["error" => $error, "task" => $this->displayTasks($user_id, $project_id), "numberOftask" => $this->count_Task($user_id, $project_id, $status)]);
+            $this->view("task/home", "", ["error" => $error, "task" => $this->displayTasks($user_id, $project_id)]);
             $this->view->render();
         } else {
             redirect("user/log_in");
@@ -75,26 +75,7 @@ class TaskController extends Controller
             exit();
         }
     }
-    public function count_Task($user_id, $project_id, $status)
-    {
-        if (isset($_SESSION["user-id"])) {
-            $user_id = $_SESSION["user-id"];
-        } else {
-            echo "User ID not found in the session.";
-        }
-        $project_id = $_SESSION["idproject"];
-        $this->model("task");
-        $taskTodo = $this->model->countTask($user_id, $project_id, "to do");
-        $taskInprogress = $this->model->countTask($user_id, $project_id, "in progress");
-        $taskDone = $this->model->countTask($user_id, $project_id, "done");
-
-        return
-            [
-                "to do" => $taskTodo,
-                "in progress" => $taskInprogress,
-                "done" => $taskDone,
-            ];
-    }
+   
     public function displaytaskRow($idtask)
     {
         $this->model("task");
@@ -158,13 +139,14 @@ class TaskController extends Controller
             }
             $project_id = $_SESSION["idproject"];
             $searchValue = $_POST["task_search"];
-            $this->model("task");
             if (!empty($searchValue)) {
+                $this->model("task");
                 $this->model->setTitle($searchValue);
                 $this->model->setDescta($searchValue);
                 $tasks = $this->model->searchTask();
                 if ($tasks) {
-                    redirect("task/task/" . $project_id);
+                    $this->view("task/home", "", ["task" => $tasks]);
+                    $this->view->render();
                 } else {
                     $this->task($project_id, "No tasks found matching the search criteria!");
                 }
